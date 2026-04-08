@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Route Calculator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c9a84c;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+    }
+
+    .section {
+      background: #16213e;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8888aa;
+      margin-bottom: 14px;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .resource-input {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .resource-input label {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .resource-input input {
+      background: #0f1629;
+      border: 1px solid #2a2a4a;
+      border-radius: 4px;
+      padding: 8px 10px;
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    .resource-input input:focus {
+      outline: none;
+      border-color: #c9a84c;
+    }
+
+    .label-lumber { color: #a67c52; }
+    .label-clay { color: #c4703f; }
+    .label-iron { color: #9a9ab0; }
+    .label-crop { color: #c9a84c; }
+
+    .dropdowns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .dropdown-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dropdown-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #8888aa;
+    }
+
+    .dropdown-group select {
+      background: #0f1629;
+      border: 1px solid #2a2a4a;
+      border-radius: 4px;
+      padding: 8px 10px;
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .dropdown-group select:focus {
+      outline: none;
+      border-color: #c9a84c;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr 1fr;
+      gap: 0;
+    }
+
+    .results-grid .cell {
+      padding: 8px 12px;
+      border-bottom: 1px solid #2a2a4a;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    .results-grid .cell:first-child {
+      text-align: left;
+    }
+
+    .results-grid .header {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8888aa;
+      font-weight: 600;
+      border-bottom: 2px solid #2a2a4a;
+    }
+
+    .results-grid .resource-label {
+      font-weight: 600;
+    }
+
+    .val-positive { color: #5cb85c; }
+    .val-negative { color: #d9534f; }
+    .val-zero { color: #666; }
+
+    .celeb-info {
+      font-size: 0.8rem;
+      color: #6a6a8a;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .note {
+      font-size: 0.75rem;
+      color: #555;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Trade Route Calculator</h1>
+
+    <div class="section">
+      <div class="section-title">Production per hour</div>
+      <div class="resource-grid">
+        <div class="resource-input">
+          <label class="label-lumber">Lumber</label>
+          <input type="number" id="prod-lumber" min="0" value="0">
+        </div>
+        <div class="resource-input">
+          <label class="label-clay">Clay</label>
+          <input type="number" id="prod-clay" min="0" value="0">
+        </div>
+        <div class="resource-input">
+          <label class="label-iron">Iron</label>
+          <input type="number" id="prod-iron" min="0" value="0">
+        </div>
+        <div class="resource-input">
+          <label class="label-crop">Crop</label>
+          <input type="number" id="prod-crop" min="0" value="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Celebrations</div>
+      <div class="dropdowns">
+        <div class="dropdown-group">
+          <label>Town Hall Level</label>
+          <select id="th-level"></select>
+        </div>
+        <div class="dropdown-group">
+          <label>Celebration Type</label>
+          <select id="celeb-type">
+            <option value="none">None</option>
+            <option value="small">Small</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+      <div class="celeb-info" id="celeb-info"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Trade Route Interval</div>
+      <div class="dropdowns">
+        <div class="dropdown-group">
+          <label>Send every</label>
+          <select id="interval">
+            <option value="1">1 hour</option>
+            <option value="2">2 hours</option>
+            <option value="3">3 hours</option>
+            <option value="4">4 hours</option>
+            <option value="6">6 hours</option>
+            <option value="8">8 hours</option>
+            <option value="12">12 hours</option>
+            <option value="24">24 hours</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Results</div>
+      <div class="results-grid" id="results">
+        <div class="cell header"></div>
+        <div class="cell header">Cost/hr</div>
+        <div class="cell header">Net/hr</div>
+        <div class="cell header">Per Send</div>
+
+        <div class="cell resource-label label-lumber">Lumber</div>
+        <div class="cell" id="cost-lumber">-</div>
+        <div class="cell" id="net-lumber">-</div>
+        <div class="cell" id="send-lumber">-</div>
+
+        <div class="cell resource-label label-clay">Clay</div>
+        <div class="cell" id="cost-clay">-</div>
+        <div class="cell" id="net-clay">-</div>
+        <div class="cell" id="send-clay">-</div>
+
+        <div class="cell resource-label label-iron">Iron</div>
+        <div class="cell" id="cost-iron">-</div>
+        <div class="cell" id="net-iron">-</div>
+        <div class="cell" id="send-iron">-</div>
+
+        <div class="cell resource-label label-crop">Crop</div>
+        <div class="cell" id="cost-crop">-</div>
+        <div class="cell" id="net-crop">-</div>
+        <div class="cell" id="send-crop">-</div>
+      </div>
+      <div class="note" id="send-note"></div>
+    </div>
+  </div>
+
+  <script>
+    const RESOURCES = ['lumber', 'clay', 'iron', 'crop'];
+
+    const CELEB_COST = {
+      small: { lumber: 6400, clay: 6650, iron: 5940, crop: 1340 },
+      large: { lumber: 29700, clay: 33250, iron: 32000, crop: 6700 }
+    };
+
+    // Exact durations in seconds at x3 speed, per Town Hall level
+    const CELEB_DURATION = {
+      small: {
+        1: 43200,  // 12:00:00
+        2: 41645,  // 11:34:05
+        3: 40146,  // 11:09:06
+        4: 38700,  // 10:45:00
+        5: 37307,  // 10:21:47
+        6: 35964,  // 09:59:24
+        7: 34669,  // 09:37:49
+        8: 33421,  // 09:17:01
+        9: 32218,  // 08:56:58
+        10: 31058, // 08:37:38
+        11: 29940, // 08:19:00
+        12: 28862, // 08:01:02
+        13: 27823, // 07:43:43
+        14: 26822, // 07:27:02
+        15: 25856, // 07:10:56
+        16: 24925, // 06:55:25
+        17: 24028, // 06:40:28
+        18: 23163, // 06:26:03
+        19: 22329, // 06:12:09
+        20: 21525  // 05:58:45
+      },
+      large: {
+        10: 77646, // 21:34:06
+        11: 74850, // 20:47:30
+        12: 72156, // 20:02:36
+        13: 69558, // 19:19:18
+        14: 67054, // 18:37:34
+        15: 64640, // 17:57:20
+        16: 62313, // 17:18:33
+        17: 60070, // 16:41:10
+        18: 57907, // 16:05:07
+        19: 55823, // 15:30:23
+        20: 53813  // 14:56:53
+      }
+    };
+
+    function getCelebDurationSeconds(type, level) {
+      return CELEB_DURATION[type][level];
+    }
+
+    function formatDuration(totalSeconds) {
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function formatValue(val) {
+      return Math.round(val).toLocaleString();
+    }
+
+    function setCell(id, value) {
+      const el = document.getElementById(id);
+      const rounded = Math.round(value);
+      el.textContent = formatValue(rounded);
+      el.className = 'cell';
+      if (rounded > 0) el.classList.add('val-positive');
+      else if (rounded < 0) el.classList.add('val-negative');
+      else el.classList.add('val-zero');
+    }
+
+    // Populate TH level dropdown
+    const thSelect = document.getElementById('th-level');
+    for (let i = 1; i <= 20; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = `Level ${i}`;
+      thSelect.appendChild(opt);
+    }
+
+    // Enforce large celebration only at TH >= 10
+    const celebSelect = document.getElementById('celeb-type');
+    function updateCelebOptions() {
+      const level = parseInt(thSelect.value);
+      const largeOpt = celebSelect.querySelector('option[value="large"]');
+      if (level < 10) {
+        largeOpt.disabled = true;
+        if (celebSelect.value === 'large') celebSelect.value = 'small';
+      } else {
+        largeOpt.disabled = false;
+      }
+    }
+
+    function calculate() {
+      updateCelebOptions();
+
+      const production = {};
+      RESOURCES.forEach(r => {
+        production[r] = parseFloat(document.getElementById(`prod-${r}`).value) || 0;
+      });
+
+      const thLevel = parseInt(thSelect.value);
+      const celebType = celebSelect.value;
+      const interval = parseInt(document.getElementById('interval').value);
+
+      const costPerHour = {};
+      RESOURCES.forEach(r => { costPerHour[r] = 0; });
+
+      const infoEl = document.getElementById('celeb-info');
+      if (celebType !== 'none') {
+        const durationSec = getCelebDurationSeconds(celebType, thLevel);
+        const durationHours = durationSec / 3600;
+        RESOURCES.forEach(r => {
+          costPerHour[r] = CELEB_COST[celebType][r] / durationHours;
+        });
+        infoEl.textContent = `${celebType === 'small' ? 'Small' : 'Large'} celebration duration: ${formatDuration(durationSec)}`;
+      } else {
+        infoEl.textContent = '';
+      }
+
+      const noteEl = document.getElementById('send-note');
+      let hasNegative = false;
+
+      RESOURCES.forEach(r => {
+        const net = production[r] - costPerHour[r];
+        const send = net * interval;
+
+        setCell(`cost-${r}`, costPerHour[r]);
+        setCell(`net-${r}`, net);
+        setCell(`send-${r}`, send);
+
+        if (net < -0.5) hasNegative = true;
+      });
+
+      noteEl.textContent = hasNegative
+        ? 'Negative values = resources this village needs to receive'
+        : '';
+    }
+
+    // Attach listeners
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
