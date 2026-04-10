@@ -9,7 +9,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #1a1a2e;
+      background: #1c1917;
       color: #e0e0e0;
       min-height: 100vh;
       display: flex;
@@ -18,20 +18,20 @@
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1400px;
       width: 100%;
     }
 
     h1 {
       text-align: center;
-      color: #c9a84c;
+      color: #f5f0e8;
       font-size: 1.6rem;
       margin-bottom: 24px;
     }
 
     .section {
-      background: #16213e;
-      border: 1px solid #2a2a4a;
+      background: #292524;
+      border: 1px solid #44403c;
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 16px;
@@ -41,15 +41,15 @@
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #8888aa;
+      color: #d6d3d1;
       margin-bottom: 14px;
     }
 
     textarea {
       width: 100%;
       min-height: 180px;
-      background: #0f1629;
-      border: 1px solid #2a2a4a;
+      background: #1c1917;
+      border: 1px solid #44403c;
       border-radius: 4px;
       padding: 10px;
       color: #e0e0e0;
@@ -58,19 +58,13 @@
       resize: vertical;
     }
 
-    textarea:focus {
-      outline: none;
-      border-color: #c9a84c;
-    }
-
-    textarea::placeholder {
-      color: #555;
-    }
+    textarea:focus { outline: none; border-color: #b8a078; }
+    textarea::placeholder { color: #555; }
 
     .btn {
       display: inline-block;
-      background: #c9a84c;
-      color: #1a1a2e;
+      background: #b8a078;
+      color: #1c1917;
       border: none;
       border-radius: 4px;
       padding: 8px 20px;
@@ -80,18 +74,9 @@
       margin-top: 10px;
     }
 
-    .btn:hover {
-      background: #dab85d;
-    }
-
-    .btn-secondary {
-      background: #2a2a4a;
-      color: #ccc;
-    }
-
-    .btn-secondary:hover {
-      background: #3a3a5a;
-    }
+    .btn:hover { background: #c9b896; }
+    .btn-secondary { background: #44403c; color: #ccc; }
+    .btn-secondary:hover { background: #57534e; }
 
     .controls-row {
       display: flex;
@@ -110,12 +95,12 @@
     .dropdown-group label {
       font-size: 0.8rem;
       font-weight: 600;
-      color: #8888aa;
+      color: #a8a29e;
     }
 
     .dropdown-group select, .dropdown-group input {
-      background: #0f1629;
-      border: 1px solid #2a2a4a;
+      background: #1c1917;
+      border: 1px solid #44403c;
       border-radius: 4px;
       padding: 8px 10px;
       color: #e0e0e0;
@@ -125,15 +110,14 @@
 
     .dropdown-group select:focus, .dropdown-group input:focus {
       outline: none;
-      border-color: #c9a84c;
+      border-color: #b8a078;
     }
 
     .label-lumber { color: #a67c52; }
     .label-clay { color: #c4703f; }
     .label-iron { color: #9a9ab0; }
-    .label-crop { color: #c9a84c; }
+    .label-crop { color: #b8a078; }
 
-    /* Village table */
     .village-table {
       width: 100%;
       border-collapse: collapse;
@@ -142,23 +126,29 @@
 
     .village-table th {
       text-align: left;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #8888aa;
+      color: #a8a29e;
       font-weight: 600;
-      padding: 6px 8px;
-      border-bottom: 2px solid #2a2a4a;
+      padding: 4px 5px;
+      border-bottom: 2px solid #44403c;
       white-space: nowrap;
     }
 
-    .village-table th.num {
-      text-align: right;
+    .village-table th.num { text-align: right; }
+
+    .village-table th.group-header {
+      text-align: center;
+      color: #b8a078;
+      border-bottom: 1px solid #44403c;
+      font-size: 0.72rem;
+      padding: 3px 5px;
     }
 
     .village-table td {
-      padding: 6px 8px;
-      border-bottom: 1px solid #2a2a4a;
+      padding: 4px 5px;
+      border-bottom: 1px solid #44403c;
       vertical-align: middle;
     }
 
@@ -169,19 +159,44 @@
 
     .village-table td.village-name {
       font-weight: 600;
-      max-width: 180px;
+      max-width: 130px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .village-table tr:hover {
-      background: #1a2748;
+    .village-table .spacer {
+      width: 20px;
+      padding: 0;
+      border-bottom-color: transparent;
+    }
+
+    .village-table .group-divider {
+      border-left: 1px solid #57534e;
+    }
+
+    #troops-table th:not(:first-child),
+    #troops-table td:not(.village-name),
+    #production-table th:not(:first-child):not(:nth-child(2)),
+    #production-table td:not(:first-child):not(.village-name),
+    #routes-table th:not(:first-child),
+    #routes-table td:not(.village-name) {
+      text-align: center;
+    }
+
+    .village-table tr:hover { background: #352f2b; }
+
+    .village-table tr.set-all-row th {
+      border-bottom: 2px solid #44403c;
+      font-size: 0.65rem;
+      color: #78716c;
+      font-style: italic;
+      padding-bottom: 6px;
     }
 
     .village-table tr.sum-row {
       font-weight: 700;
-      border-top: 2px solid #c9a84c;
+      border-top: 2px solid #b8a078;
     }
 
     .village-table tr.sum-row td {
@@ -190,34 +205,25 @@
     }
 
     .village-table select {
-      background: #0f1629;
-      border: 1px solid #2a2a4a;
+      background: #1c1917;
+      border: 1px solid #44403c;
       border-radius: 3px;
-      padding: 3px 6px;
+      padding: 2px 4px;
       color: #e0e0e0;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       cursor: pointer;
+      max-width: 110px;
     }
 
-    .village-table select:focus {
-      outline: none;
-      border-color: #c9a84c;
-    }
+    .village-table select:focus { outline: none; border-color: #b8a078; }
 
     .val-positive { color: #5cb85c; }
     .val-negative { color: #d9534f; }
     .val-zero { color: #666; }
 
-    .empty-state {
-      text-align: center;
-      color: #555;
-      padding: 30px;
-      font-size: 0.9rem;
-    }
-
     .note {
       font-size: 0.75rem;
-      color: #6a6a8a;
+      color: #78716c;
       margin-top: 10px;
     }
 
@@ -226,19 +232,6 @@
       font-size: 0.85rem;
       margin-top: 8px;
     }
-
-    .badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 1px 6px;
-      border-radius: 3px;
-      margin-left: 6px;
-      font-weight: 600;
-    }
-
-    .badge-surplus { background: #1d3a1d; color: #5cb85c; }
-    .badge-deficit { background: #3a1d1d; color: #d9534f; }
-    .badge-balanced { background: #2a2a3a; color: #888; }
 
     .tab-row {
       display: flex;
@@ -251,54 +244,62 @@
       font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
-      border: 1px solid #2a2a4a;
+      border: 1px solid #44403c;
       border-bottom: none;
-      background: #0f1629;
-      color: #8888aa;
+      background: #1c1917;
+      color: #a8a29e;
       border-radius: 6px 6px 0 0;
       margin-right: 2px;
     }
 
     .tab-btn.active {
-      background: #16213e;
-      color: #c9a84c;
-      border-color: #2a2a4a;
+      background: #292524;
+      color: #b8a078;
+      border-color: #44403c;
     }
 
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .section.tabbed {
-      border-top-left-radius: 0;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .section.tabbed { border-top-left-radius: 0; }
 
     .help-text {
       font-size: 0.78rem;
-      color: #6a6a8a;
+      color: #78716c;
       margin-bottom: 10px;
       line-height: 1.5;
     }
 
-    /* Responsive */
+    .hidden { display: none; }
+    .dim-row { opacity: 0.4; }
+    .table-wrap { overflow-x: auto; }
+
+    .subtitle {
+      text-align: center;
+      color: #d6d3d1;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: -16px;
+      margin-bottom: 22px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
     @media (max-width: 800px) {
-      .village-table {
-        font-size: 0.75rem;
-      }
-      .village-table td, .village-table th {
-        padding: 4px 4px;
-      }
+      .village-table { font-size: 0.72rem; }
+      .village-table td, .village-table th { padding: 3px 3px; }
+      .village-table select { font-size: 0.7rem; max-width: 90px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Trade Route Calculator</h1>
-    <div style="text-align:center; color:#c9a84c; font-size:0.95rem; font-weight:600; letter-spacing:1px; margin-top:-16px; margin-bottom:22px;">Designed for x3 Speed</div>
+    <div class="subtitle">Designed for x3 Speed</div>
 
     <div class="section">
       <div class="section-title">Paste Production Overview</div>
@@ -309,16 +310,20 @@
         Url should be */village/statistics/resources/production
       </div>
       <textarea id="paste-input" placeholder="Paste your Travian production overview here..."></textarea>
-      <div style="display: flex; gap: 10px; align-items: center;">
+      <div class="btn-row">
         <button class="btn" onclick="parseInput()">Parse</button>
         <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
         <span class="parse-error" id="parse-error"></span>
       </div>
     </div>
 
-    <div id="settings-section" class="section" style="display:none;">
+    <div id="settings-section" class="section hidden">
       <div class="section-title">Settings</div>
       <div class="controls-row">
+        <div class="dropdown-group">
+          <label>Tribe</label>
+          <select id="tribe" onchange="onTribeChange()"></select>
+        </div>
         <div class="dropdown-group">
           <label>Trade Route Interval</label>
           <select id="interval" onchange="recalculate()">
@@ -333,32 +338,28 @@
           </select>
         </div>
         <div class="dropdown-group">
-          <label>Set All TH Levels</label>
-          <select id="bulk-th" onchange="bulkSetTH()">
-            <option value="">--</option>
-          </select>
-        </div>
-        <div class="dropdown-group">
-          <label>Set All Celebrations</label>
-          <select id="bulk-celeb" onchange="bulkSetCeleb()">
-            <option value="none">None</option>
-            <option value="small">Small</option>
-            <option value="large">Large</option>
+          <label>Recruitment</label>
+          <select id="alliance-bonus" onchange="recalculate()">
+            <option value="0">0%</option>
+            <option value="0.02">2%</option>
+            <option value="0.04">4%</option>
+            <option value="0.06">6%</option>
+            <option value="0.08">8%</option>
+            <option value="0.10">10%</option>
           </select>
         </div>
       </div>
     </div>
 
-    <div id="results-section" style="display:none;">
+    <div id="results-section" class="hidden">
       <div class="tab-row">
         <div class="tab-btn active" onclick="switchTab('production')">Production</div>
+        <div class="tab-btn" onclick="switchTab('troops')">Troops</div>
         <div class="tab-btn" onclick="switchTab('routes')">Trade Routes</div>
       </div>
 
       <div id="tab-production" class="section tabbed tab-content active">
-        <div class="section-title">Village Production &amp; Celebration Costs</div>
-        <div class="note" style="margin-bottom:10px;">Configure celebration type and Town Hall level per village. Net = production minus celebration cost per hour.</div>
-        <div style="overflow-x: auto;">
+        <div class="table-wrap">
           <table class="village-table" id="production-table">
             <thead></thead>
             <tbody></tbody>
@@ -366,14 +367,17 @@
         </div>
       </div>
 
-      <div id="tab-routes" class="section tabbed tab-content">
-        <div class="section-title">Required Trade Routes</div>
-        <div class="note" style="margin-bottom:10px;">
-          <strong>Positive</strong> = surplus to send away.
-          <strong>Negative</strong> = deficit that needs to be received.
-          Amounts are per trade route send at the selected interval.
+      <div id="tab-troops" class="section tabbed tab-content">
+        <div class="table-wrap">
+          <table class="village-table" id="troops-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
         </div>
-        <div style="overflow-x: auto;">
+      </div>
+
+      <div id="tab-routes" class="section tabbed tab-content">
+        <div class="table-wrap">
           <table class="village-table" id="routes-table">
             <thead></thead>
             <tbody></tbody>
@@ -383,9 +387,10 @@
     </div>
   </div>
 
+  <script src="troops.js"></script>
   <script>
+    const SERVER_SPEED = 3;
     const RESOURCES = ['lumber', 'clay', 'iron', 'crop'];
-    const RES_LABELS = { lumber: 'Lumber', clay: 'Clay', iron: 'Iron', crop: 'Crop' };
 
     const CELEB_COST = {
       small: { lumber: 6400, clay: 6650, iron: 5940, crop: 1340 },
@@ -404,101 +409,116 @@
       }
     };
 
-    let villages = [];
+    // Buildings config: id, label, troopSource (which TROOPS key), costMultiplier, helmetType
+    const BUILDINGS = [
+      { id: 'barracks',  label: 'Barracks', src: 'barracks', costMul: 1, helmet: 'infantry' },
+      { id: 'gb',        label: 'GB',       src: 'barracks', costMul: 3, helmet: 'infantry' },
+      { id: 'stable',    label: 'Stable',   src: 'stable',   costMul: 1, helmet: 'cavalry' },
+      { id: 'gs',        label: 'GS',       src: 'stable',   costMul: 3, helmet: 'cavalry' },
+      { id: 'workshop',  label: 'Workshop', src: 'workshop',  costMul: 1, helmet: null },
+    ];
 
-    // Strip Unicode directional markers and clean a number string
+    let villages = [];
+    let bulkState = {
+      th: 0, celeb: 'none', artifact: 1,
+      barracksLevel: 0, barracksTroop: '', gbLevel: 0, gbTroop: '',
+      stableLevel: 0, stableTroop: '', gsLevel: 0, gsTroop: '',
+      workshopLevel: 0, workshopTroop: '',
+      infantryHelmet: 0, cavalryHelmet: 0, hdtLevel: 0,
+    };
+
+    // --- Utility ---
+
     function cleanNumber(str) {
       return str.replace(/[\u202d\u202c\u200e\u200f\u2212]/g, m => m === '\u2212' ? '-' : '').replace(/,/g, '');
     }
 
-    function parseInput() {
-      const raw = document.getElementById('paste-input').value;
-      const errorEl = document.getElementById('parse-error');
-      errorEl.textContent = '';
-
-      if (!raw.trim()) {
-        errorEl.textContent = 'Paste your production overview first.';
-        return;
-      }
-
-      // Clean the entire input of Unicode markers
-      const cleaned = raw.replace(/[\u202d\u202c\u200e\u200f]/g, '');
-
-      const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-
-      // Find village data lines: they contain a village name followed by 4 numbers
-      // Pattern: text followed by tab/space-separated numbers
-      const parsed = [];
-
-      for (const line of lines) {
-        // Skip header/sum/non-data lines
-        if (/^(Village|Sum:|Resources|Warehouse|Production|Capacity|Privacy|Server time|Alliance|Link list|Population|Loyalty|Villages\b|Village groups|House|Hero|\d+$)/i.test(line)) continue;
-        if (/^(Overview|Culture points|Troops|Send FL|Top 10|Send Troop|Kiri Sim|Party|Flow|Next Villa|Homepage|Discord|News|Support|Game rules|Terms|Imprint|Switch to|BALKAN)/i.test(line)) continue;
-        if (/^\u00a9|^©/.test(line)) continue;
-
-        // Try to extract: village name + 4 numbers
-        // Numbers can have commas and minus signs (from Unicode minus U+2212, already cleaned)
-        const numPattern = /-?[\d,]+/g;
-        const numbers = [];
-        let match;
-        let lastNumEnd = 0;
-
-        const allMatches = [...line.matchAll(/-?[\d,]+/g)];
-
-        if (allMatches.length < 4) continue;
-
-        // Take the last 4 numbers as production values
-        const lastFour = allMatches.slice(-4);
-        const firstNumStart = lastFour[0].index;
-
-        const villageName = line.substring(0, firstNumStart).trim();
-        if (!villageName) continue;
-
-        // Skip if this looks like a coordinate line (e.g., "(−43|145)")
-        if (/^\(.*\|.*\)$/.test(villageName)) continue;
-        if (/^\(/.test(villageName) && /\)$/.test(line)) continue;
-
-        const nums = lastFour.map(m => parseInt(cleanNumber(m[0]), 10));
-        if (nums.some(isNaN)) continue;
-
-        // Skip the Sum line
-        if (villageName.toLowerCase().startsWith('sum')) continue;
-
-        parsed.push({
-          name: villageName,
-          production: { lumber: nums[0], clay: nums[1], iron: nums[2], crop: nums[3] },
-          thLevel: 20,
-          celebType: 'none',
-          enabled: true
-        });
-      }
-
-      if (parsed.length === 0) {
-        errorEl.textContent = 'Could not parse any villages. Make sure you pasted the Production tab.';
-        return;
-      }
-
-      villages = parsed;
-      document.getElementById('settings-section').style.display = '';
-      document.getElementById('results-section').style.display = '';
-      renderProductionTable();
-      recalculate();
+    function formatNum(val) {
+      return Math.round(val).toLocaleString();
     }
 
-    function clearAll() {
-      villages = [];
-      document.getElementById('paste-input').value = '';
-      document.getElementById('parse-error').textContent = '';
-      document.getElementById('settings-section').style.display = 'none';
-      document.getElementById('results-section').style.display = 'none';
+    function valClass(val) {
+      const r = Math.round(val);
+      if (r > 0) return 'val-positive';
+      if (r < 0) return 'val-negative';
+      return 'val-zero';
     }
 
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById('tab-' + tab).classList.add('active');
-      document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    function getSelectedTribe() {
+      return document.getElementById('tribe').value;
     }
+
+    function getAllianceBonus() {
+      return parseFloat(document.getElementById('alliance-bonus').value) || 0;
+    }
+
+    function getInterval() {
+      return parseInt(document.getElementById('interval').value);
+    }
+
+    // --- Default village troop config ---
+
+    function defaultTroopConfig() {
+      const cfg = { infantryHelmet: 0, cavalryHelmet: 0, artifact: 1, hdtLevel: 0 };
+      BUILDINGS.forEach(b => {
+        cfg[b.id + 'Level'] = 0;
+        cfg[b.id + 'Troop'] = '';
+      });
+      return cfg;
+    }
+
+    // --- Training time calculation ---
+
+    function calcTrainingCost(village, intervalHours) {
+      const tribe = getSelectedTribe();
+      const alliance = getAllianceBonus();
+      const tribeData = TROOPS[tribe];
+      if (!tribeData) return { lumber: 0, clay: 0, iron: 0, crop: 0 };
+
+      const totalCost = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const intervalSec = intervalHours * 3600;
+      const tc = village.troopConfig;
+
+      BUILDINGS.forEach(bldg => {
+        const level = tc[bldg.id + 'Level'];
+        const troopName = tc[bldg.id + 'Troop'];
+        if (!level || !troopName) return;
+
+        const troops = tribeData[bldg.src];
+        if (!troops) return;
+        const troop = troops.find(t => t.name === troopName);
+        if (!troop) return;
+
+        const helmetBonus = bldg.helmet === 'infantry' ? tc.infantryHelmet
+                          : bldg.helmet === 'cavalry' ? tc.cavalryHelmet
+                          : 0;
+
+        const needsMod = bldg.src !== 'workshop' && (tribe === 'romans' || tribe === 'teutons' || tribe === 'gauls');
+        const tribeMod = needsMod ? 0.8 : 1.0;
+
+        // HDT is a direct time reduction (not a speed divisor), stable/GS only
+        const hdtReduction = (bldg.src === 'stable' && tc.hdtLevel > 0) ? (1 - tc.hdtLevel / 100) : 1;
+
+        const unitTime = (troop.time / SERVER_SPEED)
+                       * tribeMod * Math.pow(0.9, level - 1)
+                       / (1 + helmetBonus)
+                       / (1 + alliance)
+                       * hdtReduction
+                       * tc.artifact;
+
+        const trained = Math.floor(intervalSec / unitTime);
+        if (trained <= 0) return;
+
+        totalCost.lumber += trained * troop.cost[0] * bldg.costMul;
+        totalCost.clay   += trained * troop.cost[1] * bldg.costMul;
+        totalCost.iron   += trained * troop.cost[2] * bldg.costMul;
+        totalCost.crop   += trained * troop.cost[3] * bldg.costMul;
+      });
+
+      return totalCost;
+    }
+
+    // --- Celebration cost ---
 
     function celebCostPerHour(type, thLevel) {
       if (type === 'none') return { lumber: 0, clay: 0, iron: 0, crop: 0 };
@@ -510,187 +530,405 @@
       return cost;
     }
 
-    function formatNum(val) {
-      const rounded = Math.round(val);
-      return rounded.toLocaleString();
-    }
+    // --- Dropdown helpers ---
 
-    function valClass(val) {
-      const r = Math.round(val);
-      if (r > 0) return 'val-positive';
-      if (r < 0) return 'val-negative';
-      return 'val-zero';
-    }
-
-    function thOptions(selected) {
-      let html = '';
+    function levelOptions(selected, includeZero) {
+      let html = includeZero ? `<option value="0" ${selected === 0 ? 'selected' : ''}>-</option>` : '';
       for (let i = 1; i <= 20; i++) {
         html += `<option value="${i}" ${i === selected ? 'selected' : ''}>${i}</option>`;
       }
       return html;
     }
 
-    function celebOptions(selected, thLevel) {
+    function troopOptions(buildingSrc, selectedName) {
+      const tribe = getSelectedTribe();
+      const troops = TROOPS[tribe] && TROOPS[tribe][buildingSrc];
+      let html = `<option value="">-</option>`;
+      if (troops) {
+        troops.forEach(t => {
+          html += `<option value="${t.name}" ${t.name === selectedName ? 'selected' : ''}>${t.name}</option>`;
+        });
+      }
+      return html;
+    }
+
+    function helmetOptions(selected) {
+      return `<option value="0" ${selected === 0 ? 'selected' : ''}>None</option>
+              <option value="0.10" ${selected === 0.10 ? 'selected' : ''}>10%</option>
+              <option value="0.15" ${selected === 0.15 ? 'selected' : ''}>15%</option>
+              <option value="0.20" ${selected === 0.20 ? 'selected' : ''}>20%</option>`;
+    }
+
+    function artifactOptions(selected) {
+      return `<option value="1" ${selected === 1 ? 'selected' : ''}>None</option>
+              <option value="0.75" ${selected === 0.75 ? 'selected' : ''}>75%</option>
+              <option value="0.5" ${selected === 0.5 ? 'selected' : ''}>50%</option>`;
+    }
+
+    function celebSelectOptions(selected, thLevel) {
       let html = `<option value="none" ${selected === 'none' ? 'selected' : ''}>None</option>`;
       html += `<option value="small" ${selected === 'small' ? 'selected' : ''}>Small</option>`;
       html += `<option value="large" ${selected === 'large' ? 'selected' : ''} ${thLevel < 10 ? 'disabled' : ''}>Large</option>`;
       return html;
     }
 
+    // --- Parse ---
+
+    function parseInput() {
+      const raw = document.getElementById('paste-input').value;
+      const errorEl = document.getElementById('parse-error');
+      errorEl.textContent = '';
+
+      if (!raw.trim()) {
+        errorEl.textContent = 'Paste your production overview first.';
+        return;
+      }
+
+      const cleaned = raw.replace(/[\u202d\u202c\u200e\u200f]/g, '');
+      const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      const parsed = [];
+
+      for (const line of lines) {
+        if (/^(Village|Sum:|Resources|Warehouse|Production|Capacity|Privacy|Server time|Alliance|Link list|Population|Loyalty|Villages\b|Village groups|House|Hero|\d+$)/i.test(line)) continue;
+        if (/^(Overview|Culture points|Troops|Send FL|Top 10|Send Troop|Kiri Sim|Party|Flow|Next Villa|Homepage|Discord|News|Support|Game rules|Terms|Imprint|Switch to|BALKAN|Task overview)/i.test(line)) continue;
+        if (/^\u00a9|^©/.test(line)) continue;
+
+        const allMatches = [...line.matchAll(/-?[\d,]+/g)];
+        if (allMatches.length < 4) continue;
+
+        const lastFour = allMatches.slice(-4);
+        const firstNumStart = lastFour[0].index;
+        const villageName = line.substring(0, firstNumStart).trim();
+        if (!villageName) continue;
+
+        if (/^\(.*\|.*\)$/.test(villageName)) continue;
+        if (/^\(/.test(villageName) && /\)$/.test(line)) continue;
+
+        const nums = lastFour.map(m => parseInt(cleanNumber(m[0]), 10));
+        if (nums.some(isNaN)) continue;
+        if (villageName.toLowerCase().startsWith('sum')) continue;
+
+        parsed.push({
+          name: villageName,
+          production: { lumber: nums[0], clay: nums[1], iron: nums[2], crop: nums[3] },
+          thLevel: 20,
+          celebType: 'none',
+          enabled: true,
+          troopConfig: defaultTroopConfig(),
+        });
+      }
+
+      if (parsed.length === 0) {
+        errorEl.textContent = 'Could not parse any villages. Make sure you pasted the Production tab.';
+        return;
+      }
+
+      villages = parsed;
+      document.getElementById('settings-section').classList.remove('hidden');
+      document.getElementById('results-section').classList.remove('hidden');
+      renderProductionTable();
+      renderTroopsTable();
+      recalculate();
+    }
+
+    function clearAll() {
+      villages = [];
+      document.getElementById('paste-input').value = '';
+      document.getElementById('parse-error').textContent = '';
+      document.getElementById('settings-section').classList.add('hidden');
+      document.getElementById('results-section').classList.add('hidden');
+    }
+
+    // --- Tab switching ---
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    }
+
+    // --- Render Production Table ---
+
     function renderProductionTable() {
       const table = document.getElementById('production-table');
       table.querySelector('thead').innerHTML = `
         <tr>
+          <th></th>
           <th>Village</th>
-          <th class="num label-lumber">Lumber</th>
-          <th class="num label-clay">Clay</th>
-          <th class="num label-iron">Iron</th>
-          <th class="num label-crop">Crop</th>
-          <th>TH</th>
-          <th>Celeb</th>
-          <th>Active</th>
+          <th class="label-lumber group-divider">Lumber</th>
+          <th class="label-clay">Clay</th>
+          <th class="label-iron">Iron</th>
+          <th class="label-crop">Crop</th>
+          <th class="group-divider">Town Hall</th>
+          <th>Party</th>
+        </tr>
+        <tr class="set-all-row">
+          <th></th><th>set all</th><th class="group-divider"></th><th></th><th></th><th></th>
+          <th class="group-divider"><select onchange="bulkSetTH(+this.value)">${levelOptions(bulkState.th, true)}</select></th>
+          <th><select onchange="bulkSetCeleb(this.value)">${celebSelectOptions(bulkState.celeb, 20)}</select></th>
         </tr>`;
 
       let bodyHtml = '';
       villages.forEach((v, i) => {
-        const dimStyle = v.enabled ? '' : ' style="opacity:0.4"';
-        bodyHtml += `<tr${dimStyle}>
+        bodyHtml += `<tr class="${v.enabled ? '' : 'dim-row'}">
+          <td><input type="checkbox" ${v.enabled ? 'checked' : ''} onchange="toggleVillage(${i}, this.checked)"></td>
           <td class="village-name" title="${v.name}">${v.name}</td>
-          <td class="num">${formatNum(v.production.lumber)}</td>
-          <td class="num">${formatNum(v.production.clay)}</td>
-          <td class="num">${formatNum(v.production.iron)}</td>
-          <td class="num">${formatNum(v.production.crop)}</td>
-          <td><select onchange="setTH(${i}, this.value)">${thOptions(v.thLevel)}</select></td>
-          <td><select onchange="setCeleb(${i}, this.value)">${celebOptions(v.celebType, v.thLevel)}</select></td>
-          <td style="text-align:center"><input type="checkbox" ${v.enabled ? 'checked' : ''} onchange="toggleVillage(${i}, this.checked)"></td>
+          <td class="group-divider">${formatNum(v.production.lumber)}</td>
+          <td>${formatNum(v.production.clay)}</td>
+          <td>${formatNum(v.production.iron)}</td>
+          <td>${formatNum(v.production.crop)}</td>
+          <td class="group-divider"><select onchange="setTH(${i}, this.value)">${levelOptions(v.thLevel)}</select></td>
+          <td><select onchange="setCeleb(${i}, this.value)">${celebSelectOptions(v.celebType, v.thLevel)}</select></td>
         </tr>`;
       });
 
-      // Sum row
       const sum = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-      villages.forEach(v => {
-        RESOURCES.forEach(r => { sum[r] += v.production[r]; });
-      });
+      villages.forEach(v => RESOURCES.forEach(r => { sum[r] += v.production[r]; }));
       bodyHtml += `<tr class="sum-row">
+        <td></td>
         <td>Total</td>
-        <td class="num">${formatNum(sum.lumber)}</td>
-        <td class="num">${formatNum(sum.clay)}</td>
-        <td class="num">${formatNum(sum.iron)}</td>
-        <td class="num">${formatNum(sum.crop)}</td>
-        <td></td><td></td><td></td>
+        <td class="group-divider">${formatNum(sum.lumber)}</td>
+        <td>${formatNum(sum.clay)}</td>
+        <td>${formatNum(sum.iron)}</td>
+        <td>${formatNum(sum.crop)}</td>
+        <td class="group-divider"></td><td></td>
       </tr>`;
 
       table.querySelector('tbody').innerHTML = bodyHtml;
     }
 
-    function setTH(index, val) {
-      villages[index].thLevel = parseInt(val);
-      // If large celeb and TH < 10, switch to small
-      if (villages[index].celebType === 'large' && villages[index].thLevel < 10) {
-        villages[index].celebType = 'small';
+    // --- Render Troops Table ---
+
+    function hdtOptions(selected) {
+      let html = `<option value="0" ${selected === 0 ? 'selected' : ''}>-</option>`;
+      for (let i = 1; i <= 20; i++) {
+        html += `<option value="${i}" ${i === selected ? 'selected' : ''}>${i} (${i}%)</option>`;
       }
-      renderProductionTable();
-      recalculate();
+      return html;
     }
 
-    function setCeleb(index, val) {
-      villages[index].celebType = val;
-      recalculate();
-    }
+    function renderTroopsTable() {
+      const table = document.getElementById('troops-table');
+      const isRoman = getSelectedTribe() === 'romans';
 
-    function toggleVillage(index, checked) {
-      villages[index].enabled = checked;
-      renderProductionTable();
-      recalculate();
-    }
-
-    function bulkSetCeleb() {
-      const sel = document.getElementById('bulk-celeb');
-      const val = sel.value;
-      villages.forEach(v => {
-        if (val === 'large' && v.thLevel < 10) {
-          v.celebType = 'small';
-        } else {
-          v.celebType = val;
-        }
+      // Group headers row + column headers row
+      let groupHeader = '<tr>';
+      groupHeader += '<th></th>'; // village
+      BUILDINGS.forEach(b => {
+        groupHeader += `<th colspan="2" class="group-header group-divider">${b.label}</th>`;
       });
-      renderProductionTable();
-      recalculate();
-    }
+      groupHeader += '<th colspan="2" class="group-header group-divider">Helmets</th>';
+      if (isRoman) groupHeader += '<th class="group-header group-divider">HDT</th>';
+      groupHeader += '<th class="group-header group-divider">Artifact</th>';
+      groupHeader += '</tr>';
 
-    function bulkSetTH() {
-      const sel = document.getElementById('bulk-th');
-      const val = parseInt(sel.value);
-      if (!val) return;
-      villages.forEach(v => {
-        v.thLevel = val;
-        if (v.celebType === 'large' && v.thLevel < 10) {
-          v.celebType = 'small';
-        }
+      let colHeader = '<tr>';
+      colHeader += '<th>Village</th>';
+      BUILDINGS.forEach(b => {
+        colHeader += `<th class="group-divider">Lvl</th><th>Troop</th>`;
       });
-      renderProductionTable();
-      recalculate();
+      colHeader += '<th class="group-divider">Infantry</th><th>Cavalry</th>';
+      if (isRoman) colHeader += '<th class="group-divider">Lvl</th>';
+      colHeader += '<th class="group-divider">Trainer</th>';
+      colHeader += '</tr>';
+
+      // Set All row
+      let setAllRow = '<tr class="set-all-row">';
+      setAllRow += '<th>set all</th>';
+      BUILDINGS.forEach(b => {
+        setAllRow += `<th class="group-divider"><select onchange="bulkSetTroopCfg('${b.id}Level',+this.value)">${levelOptions(bulkState[b.id + 'Level'], true)}</select></th>`;
+        setAllRow += `<th><select onchange="bulkSetTroopCfg('${b.id}Troop',this.value)">${troopOptions(b.src, bulkState[b.id + 'Troop'])}</select></th>`;
+      });
+      setAllRow += `<th class="group-divider"><select onchange="bulkSetTroopCfg('infantryHelmet',+this.value)">${helmetOptions(bulkState.infantryHelmet)}</select></th>`;
+      setAllRow += `<th><select onchange="bulkSetTroopCfg('cavalryHelmet',+this.value)">${helmetOptions(bulkState.cavalryHelmet)}</select></th>`;
+      if (isRoman) setAllRow += `<th class="group-divider"><select onchange="bulkSetTroopCfg('hdtLevel',+this.value)">${hdtOptions(bulkState.hdtLevel)}</select></th>`;
+      setAllRow += `<th class="group-divider"><select onchange="bulkSetArtifact(+this.value)">${artifactOptions(bulkState.artifact)}</select></th>`;
+      setAllRow += '</tr>';
+
+      table.querySelector('thead').innerHTML = groupHeader + colHeader + setAllRow;
+
+      let bodyHtml = '';
+      villages.forEach((v, i) => {
+        const tc = v.troopConfig;
+        bodyHtml += `<tr class="${v.enabled ? '' : 'dim-row'}">`;
+        bodyHtml += `<td class="village-name" title="${v.name}">${v.name}</td>`;
+
+        BUILDINGS.forEach(b => {
+          bodyHtml += `<td class="group-divider"><select onchange="setTroopCfg(${i},'${b.id}Level',+this.value)">${levelOptions(tc[b.id + 'Level'], true)}</select></td>`;
+          bodyHtml += `<td><select onchange="setTroopCfg(${i},'${b.id}Troop',this.value)">${troopOptions(b.src, tc[b.id + 'Troop'])}</select></td>`;
+        });
+
+        bodyHtml += `<td class="group-divider"><select onchange="setTroopCfg(${i},'infantryHelmet',+this.value)">${helmetOptions(tc.infantryHelmet)}</select></td>`;
+        bodyHtml += `<td><select onchange="setTroopCfg(${i},'cavalryHelmet',+this.value)">${helmetOptions(tc.cavalryHelmet)}</select></td>`;
+        if (isRoman) bodyHtml += `<td class="group-divider"><select onchange="setTroopCfg(${i},'hdtLevel',+this.value)">${hdtOptions(tc.hdtLevel)}</select></td>`;
+        bodyHtml += `<td class="group-divider"><select onchange="setTroopCfg(${i},'artifact',+this.value)">${artifactOptions(tc.artifact)}</select></td>`;
+
+        bodyHtml += '</tr>';
+      });
+
+      table.querySelector('tbody').innerHTML = bodyHtml;
     }
 
-    function recalculate() {
-      if (villages.length === 0) return;
-      const interval = parseInt(document.getElementById('interval').value);
-      renderRoutesTable(interval);
-    }
+    // --- Render Routes Table ---
 
     function renderRoutesTable(interval) {
       const table = document.getElementById('routes-table');
       table.querySelector('thead').innerHTML = `
         <tr>
+          <th></th>
+          <th colspan="4" class="group-header group-divider">Expenses</th>
+          <th colspan="4" class="group-header group-divider">Trade Route</th>
+        </tr>
+        <tr>
           <th>Village</th>
-          <th class="num label-lumber">Lumber</th>
+          <th class="label-lumber group-divider">Lumber</th>
+          <th class="label-clay">Clay</th>
+          <th class="label-iron">Iron</th>
+          <th class="label-crop">Crop</th>
+          <th class="num label-lumber group-divider">Lumber</th>
           <th class="num label-clay">Clay</th>
           <th class="num label-iron">Iron</th>
           <th class="num label-crop">Crop</th>
         </tr>`;
 
       let bodyHtml = '';
-      const totals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const sendTotals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const expTotals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
 
-      villages.forEach((v) => {
-        const cost = celebCostPerHour(v.celebType, v.thLevel);
-        const send = {};
-        RESOURCES.forEach(r => {
-          send[r] = v.enabled ? (v.production[r] - cost[r]) * interval : 0;
-        });
+      villages.forEach(v => {
+        const send = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+        const expense = { lumber: 0, clay: 0, iron: 0, crop: 0 };
 
-        RESOURCES.forEach(r => { totals[r] += send[r]; });
+        if (v.enabled) {
+          const celebCost = celebCostPerHour(v.celebType, v.thLevel);
+          const trainCost = calcTrainingCost(v, interval);
+
+          RESOURCES.forEach(r => {
+            expense[r] = celebCost[r] * interval + trainCost[r];
+            send[r] = v.production[r] * interval - expense[r];
+          });
+        }
+
+        RESOURCES.forEach(r => { sendTotals[r] += send[r]; expTotals[r] += expense[r]; });
 
         bodyHtml += `<tr>
           <td class="village-name" title="${v.name}">${v.name}</td>
-          <td class="num ${valClass(send.lumber)}">${formatNum(send.lumber)}</td>
+          <td class="val-negative group-divider">${formatNum(expense.lumber)}</td>
+          <td class="val-negative">${formatNum(expense.clay)}</td>
+          <td class="val-negative">${formatNum(expense.iron)}</td>
+          <td class="val-negative">${formatNum(expense.crop)}</td>
+          <td class="num ${valClass(send.lumber)} group-divider">${formatNum(send.lumber)}</td>
           <td class="num ${valClass(send.clay)}">${formatNum(send.clay)}</td>
           <td class="num ${valClass(send.iron)}">${formatNum(send.iron)}</td>
           <td class="num ${valClass(send.crop)}">${formatNum(send.crop)}</td>
         </tr>`;
       });
 
-      // Totals row
       bodyHtml += `<tr class="sum-row">
         <td>Total</td>
-        <td class="num ${valClass(totals.lumber)}">${formatNum(totals.lumber)}</td>
-        <td class="num ${valClass(totals.clay)}">${formatNum(totals.clay)}</td>
-        <td class="num ${valClass(totals.iron)}">${formatNum(totals.iron)}</td>
-        <td class="num ${valClass(totals.crop)}">${formatNum(totals.crop)}</td>
+        <td class="val-negative group-divider">${formatNum(expTotals.lumber)}</td>
+        <td class="val-negative">${formatNum(expTotals.clay)}</td>
+        <td class="val-negative">${formatNum(expTotals.iron)}</td>
+        <td class="val-negative">${formatNum(expTotals.crop)}</td>
+        <td class="num ${valClass(sendTotals.lumber)} group-divider">${formatNum(sendTotals.lumber)}</td>
+        <td class="num ${valClass(sendTotals.clay)}">${formatNum(sendTotals.clay)}</td>
+        <td class="num ${valClass(sendTotals.iron)}">${formatNum(sendTotals.iron)}</td>
+        <td class="num ${valClass(sendTotals.crop)}">${formatNum(sendTotals.crop)}</td>
       </tr>`;
 
       table.querySelector('tbody').innerHTML = bodyHtml;
     }
 
-    // Populate bulk TH dropdown
-    (function() {
-      const sel = document.getElementById('bulk-th');
-      for (let i = 1; i <= 20; i++) {
+    // --- Event handlers ---
+
+    function enforceCelebLimit(v) {
+      if (v.celebType === 'large' && v.thLevel < 10) v.celebType = 'small';
+    }
+
+    function setTH(i, val) {
+      villages[i].thLevel = parseInt(val);
+      enforceCelebLimit(villages[i]);
+      renderProductionTable();
+      recalculate();
+    }
+
+    function setCeleb(i, val) {
+      villages[i].celebType = val;
+      recalculate();
+    }
+
+    function toggleVillage(i, checked) {
+      villages[i].enabled = checked;
+      renderProductionTable();
+      renderTroopsTable();
+      recalculate();
+    }
+
+    function setTroopCfg(i, key, val) {
+      villages[i].troopConfig[key] = val;
+      recalculate();
+    }
+
+    function onTribeChange() {
+      // Reset troop selections when tribe changes (levels preserved)
+      villages.forEach(v => {
+        BUILDINGS.forEach(b => { v.troopConfig[b.id + 'Troop'] = ''; });
+      });
+      renderTroopsTable();
+      recalculate();
+    }
+
+    function bulkSetCeleb(val) {
+      bulkState.celeb = val;
+      villages.forEach(v => {
+        v.celebType = val;
+        enforceCelebLimit(v);
+      });
+      renderProductionTable();
+      recalculate();
+    }
+
+    function bulkSetTH(val) {
+      bulkState.th = val;
+      if (!val) return;
+      villages.forEach(v => {
+        v.thLevel = val;
+        enforceCelebLimit(v);
+      });
+      renderProductionTable();
+      recalculate();
+    }
+
+    function bulkSetTroopCfg(key, val) {
+      bulkState[key] = val;
+      villages.forEach(v => { v.troopConfig[key] = val; });
+      renderTroopsTable();
+      recalculate();
+    }
+
+    function bulkSetArtifact(val) {
+      bulkState.artifact = val;
+      villages.forEach(v => { v.troopConfig.artifact = val; });
+      renderTroopsTable();
+      recalculate();
+    }
+
+    function recalculate() {
+      if (villages.length === 0) return;
+      renderRoutesTable(getInterval());
+    }
+
+    // --- Init ---
+
+    (function init() {
+      const tribeSel = document.getElementById('tribe');
+      TRIBE_LIST.forEach(t => {
         const opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = `Level ${i}`;
-        sel.appendChild(opt);
-      }
+        opt.value = t.id;
+        opt.textContent = t.name;
+        tribeSel.appendChild(opt);
+      });
     })();
   </script>
 </body>
