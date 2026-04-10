@@ -177,10 +177,8 @@
 
     #troops-table th:not(:first-child),
     #troops-table td:not(.village-name),
-    #production-table th:not(:first-child):not(:nth-child(2)),
-    #production-table td:not(:first-child):not(.village-name),
-    #routes-table th:not(:first-child),
-    #routes-table td:not(.village-name) {
+    #overview-table th:not(:first-child):not(:nth-child(2)),
+    #overview-table td:not(:first-child):not(.village-name) {
       text-align: center;
     }
 
@@ -353,14 +351,13 @@
 
     <div id="results-section" class="hidden">
       <div class="tab-row">
-        <div class="tab-btn active" onclick="switchTab('production')">Production</div>
+        <div class="tab-btn active" onclick="switchTab('overview')">Overview</div>
         <div class="tab-btn" onclick="switchTab('troops')">Troops</div>
-        <div class="tab-btn" onclick="switchTab('routes')">Trade Routes</div>
       </div>
 
-      <div id="tab-production" class="section tabbed tab-content active">
+      <div id="tab-overview" class="section tabbed tab-content active">
         <div class="table-wrap">
-          <table class="village-table" id="production-table">
+          <table class="village-table" id="overview-table">
             <thead></thead>
             <tbody></tbody>
           </table>
@@ -370,15 +367,6 @@
       <div id="tab-troops" class="section tabbed tab-content">
         <div class="table-wrap">
           <table class="village-table" id="troops-table">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="tab-routes" class="section tabbed tab-content">
-        <div class="table-wrap">
-          <table class="village-table" id="routes-table">
             <thead></thead>
             <tbody></tbody>
           </table>
@@ -626,7 +614,7 @@
       villages = parsed;
       document.getElementById('settings-section').classList.remove('hidden');
       document.getElementById('results-section').classList.remove('hidden');
-      renderProductionTable();
+      renderOverviewTable(getInterval());
       renderTroopsTable();
       recalculate();
     }
@@ -648,51 +636,119 @@
       document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
     }
 
-    // --- Render Production Table ---
+    // --- Render Overview Table (Production + Expenses + Trade Routes) ---
 
-    function renderProductionTable() {
-      const table = document.getElementById('production-table');
+    function renderOverviewTable(interval) {
+      const table = document.getElementById('overview-table');
       table.querySelector('thead').innerHTML = `
         <tr>
           <th></th>
+          <th></th>
+          <th class="group-divider"></th>
+          <th></th>
+          <th colspan="5" class="group-header group-divider">Production</th>
+          <th colspan="5" class="group-header group-divider">Expenses</th>
+          <th colspan="5" class="group-header group-divider">Trade Route</th>
+        </tr>
+        <tr>
+          <th></th>
           <th>Village</th>
+          <th class="group-divider">Town Hall</th>
+          <th>Party</th>
           <th class="label-lumber group-divider">Lumber</th>
           <th class="label-clay">Clay</th>
           <th class="label-iron">Iron</th>
           <th class="label-crop">Crop</th>
-          <th class="group-divider">Town Hall</th>
-          <th>Party</th>
+          <th class="group-divider">Total</th>
+          <th class="label-lumber group-divider">Lumber</th>
+          <th class="label-clay">Clay</th>
+          <th class="label-iron">Iron</th>
+          <th class="label-crop">Crop</th>
+          <th class="group-divider">Total</th>
+          <th class="label-lumber group-divider">Lumber</th>
+          <th class="label-clay">Clay</th>
+          <th class="label-iron">Iron</th>
+          <th class="label-crop">Crop</th>
+          <th class="group-divider">Total</th>
         </tr>
         <tr class="set-all-row">
-          <th></th><th>set all</th><th class="group-divider"></th><th></th><th></th><th></th>
+          <th></th><th>set all</th>
           <th class="group-divider"><select onchange="bulkSetTH(+this.value)">${levelOptions(bulkState.th, true)}</select></th>
           <th><select onchange="bulkSetCeleb(this.value)">${celebSelectOptions(bulkState.celeb, 20)}</select></th>
+          <th class="group-divider"></th><th></th><th></th><th></th><th class="group-divider"></th>
+          <th class="group-divider"></th><th></th><th></th><th></th><th class="group-divider"></th>
+          <th class="group-divider"></th><th></th><th></th><th></th><th class="group-divider"></th>
         </tr>`;
 
       let bodyHtml = '';
+      const prodSums = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const expSums = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const sendSums = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+
       villages.forEach((v, i) => {
+        const prod = v.production;
+        const expense = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+        const send = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+
+        if (v.enabled) {
+          const celebCost = celebCostPerHour(v.celebType, v.thLevel);
+          const trainCost = calcTrainingCost(v, interval);
+          RESOURCES.forEach(r => {
+            expense[r] = celebCost[r] * interval + trainCost[r];
+            send[r] = prod[r] * interval - expense[r];
+          });
+        }
+
+        RESOURCES.forEach(r => { prodSums[r] += prod[r]; expSums[r] += expense[r]; sendSums[r] += send[r]; });
+        const prodTotal = prod.lumber + prod.clay + prod.iron + prod.crop;
+        const expTotal = expense.lumber + expense.clay + expense.iron + expense.crop;
+        const sendTotal = send.lumber + send.clay + send.iron + send.crop;
+
         bodyHtml += `<tr class="${v.enabled ? '' : 'dim-row'}">
           <td><input type="checkbox" ${v.enabled ? 'checked' : ''} onchange="toggleVillage(${i}, this.checked)"></td>
           <td class="village-name" title="${v.name}">${v.name}</td>
-          <td class="group-divider">${formatNum(v.production.lumber)}</td>
-          <td>${formatNum(v.production.clay)}</td>
-          <td>${formatNum(v.production.iron)}</td>
-          <td>${formatNum(v.production.crop)}</td>
           <td class="group-divider"><select onchange="setTH(${i}, this.value)">${levelOptions(v.thLevel)}</select></td>
           <td><select onchange="setCeleb(${i}, this.value)">${celebSelectOptions(v.celebType, v.thLevel)}</select></td>
+          <td class="group-divider">${formatNum(prod.lumber)}</td>
+          <td>${formatNum(prod.clay)}</td>
+          <td>${formatNum(prod.iron)}</td>
+          <td>${formatNum(prod.crop)}</td>
+          <td class="group-divider">${formatNum(prodTotal)}</td>
+          <td class="val-negative group-divider">${formatNum(expense.lumber)}</td>
+          <td class="val-negative">${formatNum(expense.clay)}</td>
+          <td class="val-negative">${formatNum(expense.iron)}</td>
+          <td class="val-negative">${formatNum(expense.crop)}</td>
+          <td class="val-negative group-divider">${formatNum(expTotal)}</td>
+          <td class="${valClass(send.lumber)} group-divider">${formatNum(send.lumber)}</td>
+          <td class="${valClass(send.clay)}">${formatNum(send.clay)}</td>
+          <td class="${valClass(send.iron)}">${formatNum(send.iron)}</td>
+          <td class="${valClass(send.crop)}">${formatNum(send.crop)}</td>
+          <td class="${valClass(sendTotal)} group-divider">${formatNum(sendTotal)}</td>
         </tr>`;
       });
 
-      const sum = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-      villages.forEach(v => RESOURCES.forEach(r => { sum[r] += v.production[r]; }));
+      const prodGrand = prodSums.lumber + prodSums.clay + prodSums.iron + prodSums.crop;
+      const expGrand = expSums.lumber + expSums.clay + expSums.iron + expSums.crop;
+      const sendGrand = sendSums.lumber + sendSums.clay + sendSums.iron + sendSums.crop;
       bodyHtml += `<tr class="sum-row">
         <td></td>
         <td>Total</td>
-        <td class="group-divider">${formatNum(sum.lumber)}</td>
-        <td>${formatNum(sum.clay)}</td>
-        <td>${formatNum(sum.iron)}</td>
-        <td>${formatNum(sum.crop)}</td>
         <td class="group-divider"></td><td></td>
+        <td class="group-divider">${formatNum(prodSums.lumber)}</td>
+        <td>${formatNum(prodSums.clay)}</td>
+        <td>${formatNum(prodSums.iron)}</td>
+        <td>${formatNum(prodSums.crop)}</td>
+        <td class="group-divider">${formatNum(prodGrand)}</td>
+        <td class="val-negative group-divider">${formatNum(expSums.lumber)}</td>
+        <td class="val-negative">${formatNum(expSums.clay)}</td>
+        <td class="val-negative">${formatNum(expSums.iron)}</td>
+        <td class="val-negative">${formatNum(expSums.crop)}</td>
+        <td class="val-negative group-divider">${formatNum(expGrand)}</td>
+        <td class="${valClass(sendSums.lumber)} group-divider">${formatNum(sendSums.lumber)}</td>
+        <td class="${valClass(sendSums.clay)}">${formatNum(sendSums.clay)}</td>
+        <td class="${valClass(sendSums.iron)}">${formatNum(sendSums.iron)}</td>
+        <td class="${valClass(sendSums.crop)}">${formatNum(sendSums.crop)}</td>
+        <td class="${valClass(sendGrand)} group-divider">${formatNum(sendGrand)}</td>
       </tr>`;
 
       table.querySelector('tbody').innerHTML = bodyHtml;
@@ -770,75 +826,6 @@
       table.querySelector('tbody').innerHTML = bodyHtml;
     }
 
-    // --- Render Routes Table ---
-
-    function renderRoutesTable(interval) {
-      const table = document.getElementById('routes-table');
-      table.querySelector('thead').innerHTML = `
-        <tr>
-          <th></th>
-          <th colspan="4" class="group-header group-divider">Expenses</th>
-          <th colspan="4" class="group-header group-divider">Trade Route</th>
-        </tr>
-        <tr>
-          <th>Village</th>
-          <th class="label-lumber group-divider">Lumber</th>
-          <th class="label-clay">Clay</th>
-          <th class="label-iron">Iron</th>
-          <th class="label-crop">Crop</th>
-          <th class="num label-lumber group-divider">Lumber</th>
-          <th class="num label-clay">Clay</th>
-          <th class="num label-iron">Iron</th>
-          <th class="num label-crop">Crop</th>
-        </tr>`;
-
-      let bodyHtml = '';
-      const sendTotals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-      const expTotals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-
-      villages.forEach(v => {
-        const send = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-        const expense = { lumber: 0, clay: 0, iron: 0, crop: 0 };
-
-        if (v.enabled) {
-          const celebCost = celebCostPerHour(v.celebType, v.thLevel);
-          const trainCost = calcTrainingCost(v, interval);
-
-          RESOURCES.forEach(r => {
-            expense[r] = celebCost[r] * interval + trainCost[r];
-            send[r] = v.production[r] * interval - expense[r];
-          });
-        }
-
-        RESOURCES.forEach(r => { sendTotals[r] += send[r]; expTotals[r] += expense[r]; });
-
-        bodyHtml += `<tr>
-          <td class="village-name" title="${v.name}">${v.name}</td>
-          <td class="val-negative group-divider">${formatNum(expense.lumber)}</td>
-          <td class="val-negative">${formatNum(expense.clay)}</td>
-          <td class="val-negative">${formatNum(expense.iron)}</td>
-          <td class="val-negative">${formatNum(expense.crop)}</td>
-          <td class="num ${valClass(send.lumber)} group-divider">${formatNum(send.lumber)}</td>
-          <td class="num ${valClass(send.clay)}">${formatNum(send.clay)}</td>
-          <td class="num ${valClass(send.iron)}">${formatNum(send.iron)}</td>
-          <td class="num ${valClass(send.crop)}">${formatNum(send.crop)}</td>
-        </tr>`;
-      });
-
-      bodyHtml += `<tr class="sum-row">
-        <td>Total</td>
-        <td class="val-negative group-divider">${formatNum(expTotals.lumber)}</td>
-        <td class="val-negative">${formatNum(expTotals.clay)}</td>
-        <td class="val-negative">${formatNum(expTotals.iron)}</td>
-        <td class="val-negative">${formatNum(expTotals.crop)}</td>
-        <td class="num ${valClass(sendTotals.lumber)} group-divider">${formatNum(sendTotals.lumber)}</td>
-        <td class="num ${valClass(sendTotals.clay)}">${formatNum(sendTotals.clay)}</td>
-        <td class="num ${valClass(sendTotals.iron)}">${formatNum(sendTotals.iron)}</td>
-        <td class="num ${valClass(sendTotals.crop)}">${formatNum(sendTotals.crop)}</td>
-      </tr>`;
-
-      table.querySelector('tbody').innerHTML = bodyHtml;
-    }
 
     // --- Event handlers ---
 
@@ -849,7 +836,7 @@
     function setTH(i, val) {
       villages[i].thLevel = parseInt(val);
       enforceCelebLimit(villages[i]);
-      renderProductionTable();
+      renderOverviewTable(getInterval());
       recalculate();
     }
 
@@ -860,7 +847,7 @@
 
     function toggleVillage(i, checked) {
       villages[i].enabled = checked;
-      renderProductionTable();
+      renderOverviewTable(getInterval());
       renderTroopsTable();
       recalculate();
     }
@@ -885,7 +872,7 @@
         v.celebType = val;
         enforceCelebLimit(v);
       });
-      renderProductionTable();
+      renderOverviewTable(getInterval());
       recalculate();
     }
 
@@ -896,7 +883,7 @@
         v.thLevel = val;
         enforceCelebLimit(v);
       });
-      renderProductionTable();
+      renderOverviewTable(getInterval());
       recalculate();
     }
 
@@ -916,7 +903,7 @@
 
     function recalculate() {
       if (villages.length === 0) return;
-      renderRoutesTable(getInterval());
+      renderOverviewTable(getInterval());
     }
 
     // --- Init ---
