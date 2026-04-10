@@ -18,7 +18,7 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 1100px;
       width: 100%;
     }
 
@@ -45,47 +45,60 @@
       margin-bottom: 14px;
     }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .resource-input {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .resource-input label {
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .resource-input input {
+    textarea {
+      width: 100%;
+      min-height: 180px;
       background: #0f1629;
       border: 1px solid #2a2a4a;
       border-radius: 4px;
-      padding: 8px 10px;
+      padding: 10px;
       color: #e0e0e0;
-      font-size: 0.95rem;
-      width: 100%;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      resize: vertical;
     }
 
-    .resource-input input:focus {
+    textarea:focus {
       outline: none;
       border-color: #c9a84c;
     }
 
-    .label-lumber { color: #a67c52; }
-    .label-clay { color: #c4703f; }
-    .label-iron { color: #9a9ab0; }
-    .label-crop { color: #c9a84c; }
+    textarea::placeholder {
+      color: #555;
+    }
 
-    .dropdowns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    .btn {
+      display: inline-block;
+      background: #c9a84c;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #dab85d;
+    }
+
+    .btn-secondary {
+      background: #2a2a4a;
+      color: #ccc;
+    }
+
+    .btn-secondary:hover {
+      background: #3a3a5a;
+    }
+
+    .controls-row {
+      display: flex;
+      gap: 16px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
 
     .dropdown-group {
@@ -100,7 +113,7 @@
       color: #8888aa;
     }
 
-    .dropdown-group select {
+    .dropdown-group select, .dropdown-group input {
       background: #0f1629;
       border: 1px solid #2a2a4a;
       border-radius: 4px;
@@ -108,114 +121,207 @@
       color: #e0e0e0;
       font-size: 0.95rem;
       cursor: pointer;
-      width: 100%;
     }
 
-    .dropdown-group select:focus {
+    .dropdown-group select:focus, .dropdown-group input:focus {
       outline: none;
       border-color: #c9a84c;
     }
 
-    .results-grid {
-      display: grid;
-      grid-template-columns: auto 1fr 1fr 1fr;
-      gap: 0;
+    .label-lumber { color: #a67c52; }
+    .label-clay { color: #c4703f; }
+    .label-iron { color: #9a9ab0; }
+    .label-crop { color: #c9a84c; }
+
+    /* Village table */
+    .village-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
     }
 
-    .results-grid .cell {
-      padding: 8px 12px;
-      border-bottom: 1px solid #2a2a4a;
-      font-size: 0.9rem;
-      text-align: right;
-    }
-
-    .results-grid .cell:first-child {
+    .village-table th {
       text-align: left;
-    }
-
-    .results-grid .header {
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #8888aa;
       font-weight: 600;
+      padding: 6px 8px;
       border-bottom: 2px solid #2a2a4a;
+      white-space: nowrap;
     }
 
-    .results-grid .resource-label {
+    .village-table th.num {
+      text-align: right;
+    }
+
+    .village-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #2a2a4a;
+      vertical-align: middle;
+    }
+
+    .village-table td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .village-table td.village-name {
       font-weight: 600;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .village-table tr:hover {
+      background: #1a2748;
+    }
+
+    .village-table tr.sum-row {
+      font-weight: 700;
+      border-top: 2px solid #c9a84c;
+    }
+
+    .village-table tr.sum-row td {
+      border-bottom: none;
+      padding-top: 10px;
+    }
+
+    .village-table select {
+      background: #0f1629;
+      border: 1px solid #2a2a4a;
+      border-radius: 3px;
+      padding: 3px 6px;
+      color: #e0e0e0;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .village-table select:focus {
+      outline: none;
+      border-color: #c9a84c;
     }
 
     .val-positive { color: #5cb85c; }
     .val-negative { color: #d9534f; }
     .val-zero { color: #666; }
 
-    .celeb-info {
-      font-size: 0.8rem;
-      color: #6a6a8a;
-      margin-top: 10px;
+    .empty-state {
       text-align: center;
+      color: #555;
+      padding: 30px;
+      font-size: 0.9rem;
     }
 
     .note {
       font-size: 0.75rem;
-      color: #555;
-      text-align: center;
+      color: #6a6a8a;
+      margin-top: 10px;
+    }
+
+    .parse-error {
+      color: #d9534f;
+      font-size: 0.85rem;
       margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+
+    .badge-surplus { background: #1d3a1d; color: #5cb85c; }
+    .badge-deficit { background: #3a1d1d; color: #d9534f; }
+    .badge-balanced { background: #2a2a3a; color: #888; }
+
+    .tab-row {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .tab-btn {
+      padding: 8px 18px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #2a2a4a;
+      border-bottom: none;
+      background: #0f1629;
+      color: #8888aa;
+      border-radius: 6px 6px 0 0;
+      margin-right: 2px;
+    }
+
+    .tab-btn.active {
+      background: #16213e;
+      color: #c9a84c;
+      border-color: #2a2a4a;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section.tabbed {
+      border-top-left-radius: 0;
+    }
+
+    .help-text {
+      font-size: 0.78rem;
+      color: #6a6a8a;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .village-table {
+        font-size: 0.75rem;
+      }
+      .village-table td, .village-table th {
+        padding: 4px 4px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Trade Route Calculator</h1>
+    <div style="text-align:center; color:#c9a84c; font-size:0.95rem; font-weight:600; letter-spacing:1px; margin-top:-16px; margin-bottom:22px;">Designed for x3 Speed</div>
 
     <div class="section">
-      <div class="section-title">Production per hour</div>
-      <div class="resource-grid">
-        <div class="resource-input">
-          <label class="label-lumber">Lumber</label>
-          <input type="number" id="prod-lumber" min="0" value="0">
-        </div>
-        <div class="resource-input">
-          <label class="label-clay">Clay</label>
-          <input type="number" id="prod-clay" min="0" value="0">
-        </div>
-        <div class="resource-input">
-          <label class="label-iron">Iron</label>
-          <input type="number" id="prod-iron" min="0" value="0">
-        </div>
-        <div class="resource-input">
-          <label class="label-crop">Crop</label>
-          <input type="number" id="prod-crop" min="0" value="0">
-        </div>
+      <div class="section-title">Paste Production Overview</div>
+      <div class="help-text">
+        In Travian, go to your village overview and click the <strong>Resources</strong> tab then the <strong>Production</strong> tab.
+        Select all (Ctrl+A) and paste it below.
+        <br>
+        Url should be */village/statistics/resources/production
+      </div>
+      <textarea id="paste-input" placeholder="Paste your Travian production overview here..."></textarea>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="btn" onclick="parseInput()">Parse</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+        <span class="parse-error" id="parse-error"></span>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Celebrations</div>
-      <div class="dropdowns">
+    <div id="settings-section" class="section" style="display:none;">
+      <div class="section-title">Settings</div>
+      <div class="controls-row">
         <div class="dropdown-group">
-          <label>Town Hall Level</label>
-          <select id="th-level"></select>
-        </div>
-        <div class="dropdown-group">
-          <label>Celebration Type</label>
-          <select id="celeb-type">
-            <option value="none">None</option>
-            <option value="small">Small</option>
-            <option value="large">Large</option>
-          </select>
-        </div>
-      </div>
-      <div class="celeb-info" id="celeb-info"></div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Trade Route Interval</div>
-      <div class="dropdowns">
-        <div class="dropdown-group">
-          <label>Send every</label>
-          <select id="interval">
+          <label>Trade Route Interval</label>
+          <select id="interval" onchange="recalculate()">
             <option value="1">1 hour</option>
             <option value="2">2 hours</option>
             <option value="3">3 hours</option>
@@ -226,188 +332,366 @@
             <option value="24">24 hours</option>
           </select>
         </div>
+        <div class="dropdown-group">
+          <label>Set All TH Levels</label>
+          <select id="bulk-th" onchange="bulkSetTH()">
+            <option value="">--</option>
+          </select>
+        </div>
+        <div class="dropdown-group">
+          <label>Set All Celebrations</label>
+          <select id="bulk-celeb" onchange="bulkSetCeleb()">
+            <option value="none">None</option>
+            <option value="small">Small</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Results</div>
-      <div class="results-grid" id="results">
-        <div class="cell header"></div>
-        <div class="cell header">Cost/hr</div>
-        <div class="cell header">Net/hr</div>
-        <div class="cell header">Per Send</div>
-
-        <div class="cell resource-label label-lumber">Lumber</div>
-        <div class="cell" id="cost-lumber">-</div>
-        <div class="cell" id="net-lumber">-</div>
-        <div class="cell" id="send-lumber">-</div>
-
-        <div class="cell resource-label label-clay">Clay</div>
-        <div class="cell" id="cost-clay">-</div>
-        <div class="cell" id="net-clay">-</div>
-        <div class="cell" id="send-clay">-</div>
-
-        <div class="cell resource-label label-iron">Iron</div>
-        <div class="cell" id="cost-iron">-</div>
-        <div class="cell" id="net-iron">-</div>
-        <div class="cell" id="send-iron">-</div>
-
-        <div class="cell resource-label label-crop">Crop</div>
-        <div class="cell" id="cost-crop">-</div>
-        <div class="cell" id="net-crop">-</div>
-        <div class="cell" id="send-crop">-</div>
+    <div id="results-section" style="display:none;">
+      <div class="tab-row">
+        <div class="tab-btn active" onclick="switchTab('production')">Production</div>
+        <div class="tab-btn" onclick="switchTab('routes')">Trade Routes</div>
       </div>
-      <div class="note" id="send-note"></div>
+
+      <div id="tab-production" class="section tabbed tab-content active">
+        <div class="section-title">Village Production &amp; Celebration Costs</div>
+        <div class="note" style="margin-bottom:10px;">Configure celebration type and Town Hall level per village. Net = production minus celebration cost per hour.</div>
+        <div style="overflow-x: auto;">
+          <table class="village-table" id="production-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="tab-routes" class="section tabbed tab-content">
+        <div class="section-title">Required Trade Routes</div>
+        <div class="note" style="margin-bottom:10px;">
+          <strong>Positive</strong> = surplus to send away.
+          <strong>Negative</strong> = deficit that needs to be received.
+          Amounts are per trade route send at the selected interval.
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="village-table" id="routes-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
     const RESOURCES = ['lumber', 'clay', 'iron', 'crop'];
+    const RES_LABELS = { lumber: 'Lumber', clay: 'Clay', iron: 'Iron', crop: 'Crop' };
 
     const CELEB_COST = {
       small: { lumber: 6400, clay: 6650, iron: 5940, crop: 1340 },
       large: { lumber: 29700, clay: 33250, iron: 32000, crop: 6700 }
     };
 
-    // Exact durations in seconds at x3 speed, per Town Hall level
     const CELEB_DURATION = {
       small: {
-        1: 43200,  // 12:00:00
-        2: 41645,  // 11:34:05
-        3: 40146,  // 11:09:06
-        4: 38700,  // 10:45:00
-        5: 37307,  // 10:21:47
-        6: 35964,  // 09:59:24
-        7: 34669,  // 09:37:49
-        8: 33421,  // 09:17:01
-        9: 32218,  // 08:56:58
-        10: 31058, // 08:37:38
-        11: 29940, // 08:19:00
-        12: 28862, // 08:01:02
-        13: 27823, // 07:43:43
-        14: 26822, // 07:27:02
-        15: 25856, // 07:10:56
-        16: 24925, // 06:55:25
-        17: 24028, // 06:40:28
-        18: 23163, // 06:26:03
-        19: 22329, // 06:12:09
-        20: 21525  // 05:58:45
+        1:43200, 2:41645, 3:40146, 4:38700, 5:37307, 6:35964, 7:34669,
+        8:33421, 9:32218, 10:31058, 11:29940, 12:28862, 13:27823,
+        14:26822, 15:25856, 16:24925, 17:24028, 18:23163, 19:22329, 20:21525
       },
       large: {
-        10: 77646, // 21:34:06
-        11: 74850, // 20:47:30
-        12: 72156, // 20:02:36
-        13: 69558, // 19:19:18
-        14: 67054, // 18:37:34
-        15: 64640, // 17:57:20
-        16: 62313, // 17:18:33
-        17: 60070, // 16:41:10
-        18: 57907, // 16:05:07
-        19: 55823, // 15:30:23
-        20: 53813  // 14:56:53
+        10:77646, 11:74850, 12:72156, 13:69558, 14:67054, 15:64640,
+        16:62313, 17:60070, 18:57907, 19:55823, 20:53813
       }
     };
 
-    function getCelebDurationSeconds(type, level) {
-      return CELEB_DURATION[type][level];
+    let villages = [];
+
+    // Strip Unicode directional markers and clean a number string
+    function cleanNumber(str) {
+      return str.replace(/[\u202d\u202c\u200e\u200f\u2212]/g, m => m === '\u2212' ? '-' : '').replace(/,/g, '');
     }
 
-    function formatDuration(totalSeconds) {
-      const h = Math.floor(totalSeconds / 3600);
-      const m = Math.floor((totalSeconds % 3600) / 60);
-      const s = totalSeconds % 60;
-      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-    }
+    function parseInput() {
+      const raw = document.getElementById('paste-input').value;
+      const errorEl = document.getElementById('parse-error');
+      errorEl.textContent = '';
 
-    function formatValue(val) {
-      return Math.round(val).toLocaleString();
-    }
-
-    function setCell(id, value) {
-      const el = document.getElementById(id);
-      const rounded = Math.round(value);
-      el.textContent = formatValue(rounded);
-      el.className = 'cell';
-      if (rounded > 0) el.classList.add('val-positive');
-      else if (rounded < 0) el.classList.add('val-negative');
-      else el.classList.add('val-zero');
-    }
-
-    // Populate TH level dropdown
-    const thSelect = document.getElementById('th-level');
-    for (let i = 1; i <= 20; i++) {
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = `Level ${i}`;
-      thSelect.appendChild(opt);
-    }
-
-    // Enforce large celebration only at TH >= 10
-    const celebSelect = document.getElementById('celeb-type');
-    function updateCelebOptions() {
-      const level = parseInt(thSelect.value);
-      const largeOpt = celebSelect.querySelector('option[value="large"]');
-      if (level < 10) {
-        largeOpt.disabled = true;
-        if (celebSelect.value === 'large') celebSelect.value = 'small';
-      } else {
-        largeOpt.disabled = false;
+      if (!raw.trim()) {
+        errorEl.textContent = 'Paste your production overview first.';
+        return;
       }
-    }
 
-    function calculate() {
-      updateCelebOptions();
+      // Clean the entire input of Unicode markers
+      const cleaned = raw.replace(/[\u202d\u202c\u200e\u200f]/g, '');
 
-      const production = {};
-      RESOURCES.forEach(r => {
-        production[r] = parseFloat(document.getElementById(`prod-${r}`).value) || 0;
-      });
+      const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-      const thLevel = parseInt(thSelect.value);
-      const celebType = celebSelect.value;
-      const interval = parseInt(document.getElementById('interval').value);
+      // Find village data lines: they contain a village name followed by 4 numbers
+      // Pattern: text followed by tab/space-separated numbers
+      const parsed = [];
 
-      const costPerHour = {};
-      RESOURCES.forEach(r => { costPerHour[r] = 0; });
+      for (const line of lines) {
+        // Skip header/sum/non-data lines
+        if (/^(Village|Sum:|Resources|Warehouse|Production|Capacity|Privacy|Server time|Alliance|Link list|Population|Loyalty|Villages\b|Village groups|House|Hero|\d+$)/i.test(line)) continue;
+        if (/^(Overview|Culture points|Troops|Send FL|Top 10|Send Troop|Kiri Sim|Party|Flow|Next Villa|Homepage|Discord|News|Support|Game rules|Terms|Imprint|Switch to|BALKAN)/i.test(line)) continue;
+        if (/^\u00a9|^©/.test(line)) continue;
 
-      const infoEl = document.getElementById('celeb-info');
-      if (celebType !== 'none') {
-        const durationSec = getCelebDurationSeconds(celebType, thLevel);
-        const durationHours = durationSec / 3600;
-        RESOURCES.forEach(r => {
-          costPerHour[r] = CELEB_COST[celebType][r] / durationHours;
+        // Try to extract: village name + 4 numbers
+        // Numbers can have commas and minus signs (from Unicode minus U+2212, already cleaned)
+        const numPattern = /-?[\d,]+/g;
+        const numbers = [];
+        let match;
+        let lastNumEnd = 0;
+
+        const allMatches = [...line.matchAll(/-?[\d,]+/g)];
+
+        if (allMatches.length < 4) continue;
+
+        // Take the last 4 numbers as production values
+        const lastFour = allMatches.slice(-4);
+        const firstNumStart = lastFour[0].index;
+
+        const villageName = line.substring(0, firstNumStart).trim();
+        if (!villageName) continue;
+
+        // Skip if this looks like a coordinate line (e.g., "(−43|145)")
+        if (/^\(.*\|.*\)$/.test(villageName)) continue;
+        if (/^\(/.test(villageName) && /\)$/.test(line)) continue;
+
+        const nums = lastFour.map(m => parseInt(cleanNumber(m[0]), 10));
+        if (nums.some(isNaN)) continue;
+
+        // Skip the Sum line
+        if (villageName.toLowerCase().startsWith('sum')) continue;
+
+        parsed.push({
+          name: villageName,
+          production: { lumber: nums[0], clay: nums[1], iron: nums[2], crop: nums[3] },
+          thLevel: 20,
+          celebType: 'none',
+          enabled: true
         });
-        infoEl.textContent = `${celebType === 'small' ? 'Small' : 'Large'} celebration duration: ${formatDuration(durationSec)}`;
-      } else {
-        infoEl.textContent = '';
       }
 
-      const noteEl = document.getElementById('send-note');
-      let hasNegative = false;
+      if (parsed.length === 0) {
+        errorEl.textContent = 'Could not parse any villages. Make sure you pasted the Production tab.';
+        return;
+      }
 
-      RESOURCES.forEach(r => {
-        const net = production[r] - costPerHour[r];
-        const send = net * interval;
-
-        setCell(`cost-${r}`, costPerHour[r]);
-        setCell(`net-${r}`, net);
-        setCell(`send-${r}`, send);
-
-        if (net < -0.5) hasNegative = true;
-      });
-
-      noteEl.textContent = hasNegative
-        ? 'Negative values = resources this village needs to receive'
-        : '';
+      villages = parsed;
+      document.getElementById('settings-section').style.display = '';
+      document.getElementById('results-section').style.display = '';
+      renderProductionTable();
+      recalculate();
     }
 
-    // Attach listeners
-    document.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener('input', calculate);
-      el.addEventListener('change', calculate);
-    });
+    function clearAll() {
+      villages = [];
+      document.getElementById('paste-input').value = '';
+      document.getElementById('parse-error').textContent = '';
+      document.getElementById('settings-section').style.display = 'none';
+      document.getElementById('results-section').style.display = 'none';
+    }
 
-    calculate();
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+    }
+
+    function celebCostPerHour(type, thLevel) {
+      if (type === 'none') return { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const dur = CELEB_DURATION[type][thLevel];
+      if (!dur) return { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      const hours = dur / 3600;
+      const cost = {};
+      RESOURCES.forEach(r => { cost[r] = CELEB_COST[type][r] / hours; });
+      return cost;
+    }
+
+    function formatNum(val) {
+      const rounded = Math.round(val);
+      return rounded.toLocaleString();
+    }
+
+    function valClass(val) {
+      const r = Math.round(val);
+      if (r > 0) return 'val-positive';
+      if (r < 0) return 'val-negative';
+      return 'val-zero';
+    }
+
+    function thOptions(selected) {
+      let html = '';
+      for (let i = 1; i <= 20; i++) {
+        html += `<option value="${i}" ${i === selected ? 'selected' : ''}>${i}</option>`;
+      }
+      return html;
+    }
+
+    function celebOptions(selected, thLevel) {
+      let html = `<option value="none" ${selected === 'none' ? 'selected' : ''}>None</option>`;
+      html += `<option value="small" ${selected === 'small' ? 'selected' : ''}>Small</option>`;
+      html += `<option value="large" ${selected === 'large' ? 'selected' : ''} ${thLevel < 10 ? 'disabled' : ''}>Large</option>`;
+      return html;
+    }
+
+    function renderProductionTable() {
+      const table = document.getElementById('production-table');
+      table.querySelector('thead').innerHTML = `
+        <tr>
+          <th>Village</th>
+          <th class="num label-lumber">Lumber</th>
+          <th class="num label-clay">Clay</th>
+          <th class="num label-iron">Iron</th>
+          <th class="num label-crop">Crop</th>
+          <th>TH</th>
+          <th>Celeb</th>
+          <th>Active</th>
+        </tr>`;
+
+      let bodyHtml = '';
+      villages.forEach((v, i) => {
+        const dimStyle = v.enabled ? '' : ' style="opacity:0.4"';
+        bodyHtml += `<tr${dimStyle}>
+          <td class="village-name" title="${v.name}">${v.name}</td>
+          <td class="num">${formatNum(v.production.lumber)}</td>
+          <td class="num">${formatNum(v.production.clay)}</td>
+          <td class="num">${formatNum(v.production.iron)}</td>
+          <td class="num">${formatNum(v.production.crop)}</td>
+          <td><select onchange="setTH(${i}, this.value)">${thOptions(v.thLevel)}</select></td>
+          <td><select onchange="setCeleb(${i}, this.value)">${celebOptions(v.celebType, v.thLevel)}</select></td>
+          <td style="text-align:center"><input type="checkbox" ${v.enabled ? 'checked' : ''} onchange="toggleVillage(${i}, this.checked)"></td>
+        </tr>`;
+      });
+
+      // Sum row
+      const sum = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+      villages.forEach(v => {
+        RESOURCES.forEach(r => { sum[r] += v.production[r]; });
+      });
+      bodyHtml += `<tr class="sum-row">
+        <td>Total</td>
+        <td class="num">${formatNum(sum.lumber)}</td>
+        <td class="num">${formatNum(sum.clay)}</td>
+        <td class="num">${formatNum(sum.iron)}</td>
+        <td class="num">${formatNum(sum.crop)}</td>
+        <td></td><td></td><td></td>
+      </tr>`;
+
+      table.querySelector('tbody').innerHTML = bodyHtml;
+    }
+
+    function setTH(index, val) {
+      villages[index].thLevel = parseInt(val);
+      // If large celeb and TH < 10, switch to small
+      if (villages[index].celebType === 'large' && villages[index].thLevel < 10) {
+        villages[index].celebType = 'small';
+      }
+      renderProductionTable();
+      recalculate();
+    }
+
+    function setCeleb(index, val) {
+      villages[index].celebType = val;
+      recalculate();
+    }
+
+    function toggleVillage(index, checked) {
+      villages[index].enabled = checked;
+      renderProductionTable();
+      recalculate();
+    }
+
+    function bulkSetCeleb() {
+      const sel = document.getElementById('bulk-celeb');
+      const val = sel.value;
+      villages.forEach(v => {
+        if (val === 'large' && v.thLevel < 10) {
+          v.celebType = 'small';
+        } else {
+          v.celebType = val;
+        }
+      });
+      renderProductionTable();
+      recalculate();
+    }
+
+    function bulkSetTH() {
+      const sel = document.getElementById('bulk-th');
+      const val = parseInt(sel.value);
+      if (!val) return;
+      villages.forEach(v => {
+        v.thLevel = val;
+        if (v.celebType === 'large' && v.thLevel < 10) {
+          v.celebType = 'small';
+        }
+      });
+      renderProductionTable();
+      recalculate();
+    }
+
+    function recalculate() {
+      if (villages.length === 0) return;
+      const interval = parseInt(document.getElementById('interval').value);
+      renderRoutesTable(interval);
+    }
+
+    function renderRoutesTable(interval) {
+      const table = document.getElementById('routes-table');
+      table.querySelector('thead').innerHTML = `
+        <tr>
+          <th>Village</th>
+          <th class="num label-lumber">Lumber</th>
+          <th class="num label-clay">Clay</th>
+          <th class="num label-iron">Iron</th>
+          <th class="num label-crop">Crop</th>
+        </tr>`;
+
+      let bodyHtml = '';
+      const totals = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+
+      villages.forEach((v) => {
+        const cost = celebCostPerHour(v.celebType, v.thLevel);
+        const send = {};
+        RESOURCES.forEach(r => {
+          send[r] = v.enabled ? (v.production[r] - cost[r]) * interval : 0;
+        });
+
+        RESOURCES.forEach(r => { totals[r] += send[r]; });
+
+        bodyHtml += `<tr>
+          <td class="village-name" title="${v.name}">${v.name}</td>
+          <td class="num ${valClass(send.lumber)}">${formatNum(send.lumber)}</td>
+          <td class="num ${valClass(send.clay)}">${formatNum(send.clay)}</td>
+          <td class="num ${valClass(send.iron)}">${formatNum(send.iron)}</td>
+          <td class="num ${valClass(send.crop)}">${formatNum(send.crop)}</td>
+        </tr>`;
+      });
+
+      // Totals row
+      bodyHtml += `<tr class="sum-row">
+        <td>Total</td>
+        <td class="num ${valClass(totals.lumber)}">${formatNum(totals.lumber)}</td>
+        <td class="num ${valClass(totals.clay)}">${formatNum(totals.clay)}</td>
+        <td class="num ${valClass(totals.iron)}">${formatNum(totals.iron)}</td>
+        <td class="num ${valClass(totals.crop)}">${formatNum(totals.crop)}</td>
+      </tr>`;
+
+      table.querySelector('tbody').innerHTML = bodyHtml;
+    }
+
+    // Populate bulk TH dropdown
+    (function() {
+      const sel = document.getElementById('bulk-th');
+      for (let i = 1; i <= 20; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = `Level ${i}`;
+        sel.appendChild(opt);
+      }
+    })();
   </script>
 </body>
 </html>
