@@ -576,25 +576,30 @@
       const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       const parsed = [];
 
+      // Language-agnostic parsing: split each line into whitespace-separated tokens,
+      // identify tokens that are purely numeric (with dot/comma thousands separators),
+      // and look for lines with 4+ numeric tokens at the end.
+      const numToken = /^\d+(?:[.,]\d{3})*$/;
+
       for (const line of lines) {
-        if (/^(Village|Sum:|Resources|Warehouse|Production|Capacity|Privacy|Server time|Alliance|Link list|Population|Loyalty|Villages\b|Village groups|House|Hero|\d+$)/i.test(line)) continue;
-        if (/^(Overview|Culture points|Troops|Send FL|Top 10|Send Troop|Kiri Sim|Party|Flow|Next Villa|Homepage|Discord|News|Support|Game rules|Terms|Imprint|Switch to|BALKAN|Task overview)/i.test(line)) continue;
-        if (/^\u00a9|^©/.test(line)) continue;
+        const tokens = line.split(/\s+/);
+        const numericIndices = [];
+        for (let t = 0; t < tokens.length; t++) {
+          if (numToken.test(tokens[t])) numericIndices.push(t);
+        }
+        if (numericIndices.length < 4) continue;
 
-        const allMatches = [...line.matchAll(/-?[\d,]+/g)];
-        if (allMatches.length < 4) continue;
-
-        const lastFour = allMatches.slice(-4);
-        const firstNumStart = lastFour[0].index;
-        const villageName = line.substring(0, firstNumStart).trim();
+        // Take the last 4 numeric tokens as production values
+        const last4Indices = numericIndices.slice(-4);
+        const nameTokens = tokens.slice(0, last4Indices[0]);
+        const villageName = nameTokens.join(' ').trim();
         if (!villageName) continue;
 
-        if (/^\(.*\|.*\)$/.test(villageName)) continue;
-        if (/^\(/.test(villageName) && /\)$/.test(line)) continue;
+        // Skip coordinate lines
+        if (/\(.*\|.*\)/.test(line)) continue;
 
-        const nums = lastFour.map(m => parseInt(cleanNumber(m[0]), 10));
+        const nums = last4Indices.map(idx => parseInt(tokens[idx].replace(/[.,]/g, ''), 10));
         if (nums.some(isNaN)) continue;
-        if (villageName.toLowerCase().startsWith('sum')) continue;
 
         parsed.push({
           name: villageName,
@@ -604,6 +609,17 @@
           enabled: true,
           troopConfig: defaultTroopConfig(),
         });
+      }
+
+      // Detect sum line: if last entry's values ≈ sum of all others, remove it
+      if (parsed.length > 1) {
+        const last = parsed[parsed.length - 1];
+        const check = { lumber: 0, clay: 0, iron: 0, crop: 0 };
+        for (let i = 0; i < parsed.length - 1; i++) {
+          RESOURCES.forEach(r => { check[r] += parsed[i].production[r]; });
+        }
+        const isSum = RESOURCES.every(r => Math.abs(last.production[r] - check[r]) < 100);
+        if (isSum) parsed.pop();
       }
 
       if (parsed.length === 0) {
